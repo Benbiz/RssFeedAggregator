@@ -13,20 +13,20 @@ public class UserFeedEntry {
 	@Reference
 	private FeedEntry feedentry;
 	private boolean read;
-	
+
 	public UserFeedEntry() {
-		
+
 	}
-	
+
 	public UserFeedEntry(User user, FeedEntry feedentry) {
 		this.user = user;
 		this.feedentry = feedentry;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
-	
+
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -46,5 +46,5 @@ public class UserFeedEntry {
 	public void setRead(boolean read) {
 		this.read = read;
 	}
-	
+
 }

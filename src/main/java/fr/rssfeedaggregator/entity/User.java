@@ -25,23 +25,23 @@ public class User {
 	@NotNull
 	@Indexed(options = @IndexOptions(unique = true))
 	private String email;
-	
+
 	public User() {
 	}
-	
-	public User(String username, String password, String firstname, String lastname, String email){
+
+	public User(String username, String password, String firstname, String lastname, String email) {
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
 	}
-	
+
 	@JsonProperty("id")
 	public String getStringId() {
 		return id.toHexString();
 	}
-	
+
 	public ObjectId getId() {
 		return id;
 	}
@@ -85,6 +85,5 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+
 }

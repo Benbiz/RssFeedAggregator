@@ -9,11 +9,10 @@ import org.mongodb.morphia.Morphia;
 
 import com.mongodb.MongoClient;
 
-public class MorphiaUtil implements ServletContextListener
-{
+public class MorphiaUtil implements ServletContextListener {
 	private final Morphia morphia = new Morphia();
 	private Datastore datastore;
-	
+
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		ServletContext ctx = arg0.getServletContext();
@@ -23,9 +22,9 @@ public class MorphiaUtil implements ServletContextListener
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		ServletContext ctx = arg0.getServletContext();
-		
+
 		morphia.mapPackage("fr.rssfeedaggregator.entity");
-		datastore = morphia.createDatastore((MongoClient)ctx.getAttribute("MongoDB"), ctx.getInitParameter("DBNAME"));
+		datastore = morphia.createDatastore((MongoClient) ctx.getAttribute("MongoDB"), ctx.getInitParameter("DBNAME"));
 		datastore.ensureIndexes();
 		ctx.setAttribute("DataStore", datastore);
 	}

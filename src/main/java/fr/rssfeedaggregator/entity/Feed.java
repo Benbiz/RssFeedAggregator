@@ -14,23 +14,23 @@ public class Feed {
 	private String title;
 	private String link;
 	private String description;
-	
+
 	public Feed() {
-		
+
 	}
-	
+
 	public Feed(String feedUrl, String title, String link, String description) {
 		this.feedUrl = feedUrl;
 		this.title = title;
 		this.link = link;
 		this.description = description;
 	}
-	
+
 	@JsonProperty("id")
 	public String getStringId() {
 		return id.toHexString();
 	}
-	
+
 	public ObjectId getId() {
 		return id;
 	}

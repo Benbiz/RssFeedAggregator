@@ -12,27 +12,27 @@ public class UserFeed {
 	private User user;
 	@Reference
 	private Feed feed;
-	
+
 	public UserFeed() {
 	}
-	
+
 	public UserFeed(User user, Feed feed) {
 		this.user = user;
 		this.feed = feed;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
-	
+
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public Feed getFeed() {
 		return this.feed;
 	}
-	
+
 	public void setFeed(Feed feed) {
 		this.feed = feed;
 	}

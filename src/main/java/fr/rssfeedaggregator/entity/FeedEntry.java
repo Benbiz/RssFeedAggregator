@@ -14,17 +14,17 @@ public class FeedEntry {
 	private FeedEntryDescription description;
 	@Reference
 	private Feed feed;
-	
+
 	public FeedEntry() {
 	}
-	
+
 	public FeedEntry(Feed feed, String title, String link, FeedEntryDescription description) {
 		this.feed = feed;
 		this.title = title;
 		this.link = link;
 		this.description = description;
 	}
-	
+
 	public ObjectId getId() {
 		return id;
 	}
@@ -44,19 +44,19 @@ public class FeedEntry {
 	public void setLink(String link) {
 		this.link = link;
 	}
-	
+
 	public FeedEntryDescription getDescription() {
 		return description;
 	}
-	
-	public void	setDescription(FeedEntryDescription description) {
+
+	public void setDescription(FeedEntryDescription description) {
 		this.description = description;
 	}
-	
+
 	public Feed getFeed() {
 		return feed;
 	}
-	
+
 	public void setFeed(Feed feed) {
 		this.feed = feed;
 	}
