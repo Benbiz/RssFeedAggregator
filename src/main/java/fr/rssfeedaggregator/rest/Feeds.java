@@ -91,9 +91,10 @@ public class Feeds {
 	public Response getFeeds(@Context SecurityContext securityContext, @Context ServletContext context) {
 		Datastore datastore = (Datastore) context.getAttribute("DataStore");
 		List<Feed> feeds = new Vector<Feed>();
-
+		User user = ((PrincipalUser) securityContext.getUserPrincipal()).getUser();
+		
 		Query<UserFeed> userfeeds = datastore.createQuery(UserFeed.class).field("user")
-				.equal(((PrincipalUser) securityContext.getUserPrincipal()).getUser());
+				.equal(user);
 		for (UserFeed u : userfeeds.fetch())
 			feeds.add(u.getFeed());
 		return Response.ok(feeds).build();
@@ -112,12 +113,11 @@ public class Feeds {
 		ObjectId objid = new ObjectId(id);
 		Feed feed = datastore.get(Feed.class, objid);
 		User user = ((PrincipalUser) securityContext.getUserPrincipal()).getUser();
-
+		
 		if (feed == null)
 			return Response.status(Response.Status.BAD_REQUEST).build();
-		UserFeed userfeed = datastore.createQuery(UserFeed.class).field("user").equal(user).field("feed").equal(feed)
-				.get();
-
+		
+		UserFeed userfeed = datastore.createQuery(UserFeed.class).field("user").equal(user).field("feed").equal(feed).get();
 		if (userfeed == null)
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		return Response.ok(feed).build();

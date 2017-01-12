@@ -3,12 +3,16 @@ package fr.rssfeedaggregator.entity;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity("UserFeedEntries")
 @Indexes(@Index(fields = { @Field("user"), @Field("feedentry") }, options = @IndexOptions(unique = true)))
 public class UserFeedEntry {
 	@Id
+	@JsonIgnore
 	private ObjectId id;
 	@Reference
+	@JsonIgnore
 	private User user;
 	@Reference
 	private FeedEntry feedentry;
@@ -23,6 +27,7 @@ public class UserFeedEntry {
 		this.feedentry = feedentry;
 	}
 
+	@JsonIgnore
 	public User getUser() {
 		return user;
 	}

@@ -3,6 +3,8 @@ package fr.rssfeedaggregator.entity;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity("FeedEntries")
 @Indexes(@Index(fields = { @Field("title"), @Field("link"), @Field("feed") }, options = @IndexOptions(unique = true)))
 public class FeedEntry {
@@ -25,6 +27,11 @@ public class FeedEntry {
 		this.description = description;
 	}
 
+	@JsonProperty("id")
+	public String getStringId() {
+		return id.toHexString();
+	}
+	
 	public ObjectId getId() {
 		return id;
 	}
@@ -53,6 +60,11 @@ public class FeedEntry {
 		this.description = description;
 	}
 
+	@JsonProperty("feed")
+	public String getFeedId() {
+		return feed.getId().toHexString();
+	}
+	
 	public Feed getFeed() {
 		return feed;
 	}
