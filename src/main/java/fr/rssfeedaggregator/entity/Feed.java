@@ -59,11 +59,11 @@ public class Feed {
 		this.link = link;
 	}
 
-	public String getDesciption() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDesciption(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 }

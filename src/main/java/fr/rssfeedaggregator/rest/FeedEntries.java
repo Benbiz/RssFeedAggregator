@@ -1,9 +1,6 @@
 package fr.rssfeedaggregator.rest;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.ServletContext;
@@ -19,19 +16,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.UpdateResult;
-
-import fr.rssfeedaggregator.connection.MongoDB;
 import fr.rssfeedaggregator.entity.UserFeedEntry;
 import fr.rssfeedaggregator.entity.Feed;
 import fr.rssfeedaggregator.entity.FeedEntry;
@@ -39,7 +29,9 @@ import fr.rssfeedaggregator.entity.User;
 import fr.rssfeedaggregator.entity.UserFeed;
 import fr.rssfeedaggregator.rest.auth.PrincipalUser;
 import fr.rssfeedaggregator.rest.auth.Secured;
+import io.swagger.annotations.Api;
 
+@Api
 @Path("feeds")
 public class FeedEntries {
 
