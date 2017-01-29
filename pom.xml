@@ -10,73 +10,25 @@
 	<name>rssfeedaggregator-server</name>
 
 	<build>
-		<finalName>rest-getting-started</finalName>
+		<finalName>api</finalName>
 		<plugins>
-			<plugin>
+			<!--<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.2.4.v20141103</version>
 				<configuration>
-					<!-- <scanIntervalSeconds>5</scanIntervalSeconds> -->
+					<scanIntervalSeconds>5</scanIntervalSeconds> 
 				</configuration>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.5.1</version>
 				<inherited>true</inherited>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.github.kongchen</groupId>
-				<artifactId>swagger-maven-plugin</artifactId>
-				<version>3.1.0</version>
-				<configuration>
-					<apiSources>
-						<apiSource>
-							<springmvc>false</springmvc>
-							<locations>fr.rssfeedaggregator.rest</locations>
-							<schemes>http</schemes>
-							<host>localhost:8080</host>
-							<basePath>/webapi</basePath>
-							<info>
-								<title>Swagger Maven Plugin Sample</title>
-								<version>v1</version>
-								<description>This is a sample for swagger-maven-plugin</description>
-								<termsOfService>
-									http://www.github.com/kongchen/swagger-maven-plugin
-								</termsOfService>
-								<contact>
-									<email>kongchen@gmail.com</email>
-									<name>Kong Chen</name>
-									<url>http://kongch.com</url>
-								</contact>
-								<license>
-									<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-									<name>Apache 2.0</name>
-								</license>
-							</info>
-							<swaggerDirectory>./</swaggerDirectory>
-							<securityDefinitions>
-								<securityDefinition>
-									<name>basicAuth</name>
-									<type>basic</type>
-								</securityDefinition>
-							</securityDefinitions>
-						</apiSource>
-					</apiSources>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -97,18 +49,6 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.swagger</groupId>
-			<artifactId>swagger-core</artifactId>
-			<version>1.5.0</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.ws.rs</groupId>
-					<artifactId>jsr311-api</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>

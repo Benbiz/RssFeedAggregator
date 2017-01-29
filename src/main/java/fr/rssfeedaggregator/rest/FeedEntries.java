@@ -29,9 +29,7 @@ import fr.rssfeedaggregator.entity.User;
 import fr.rssfeedaggregator.entity.UserFeed;
 import fr.rssfeedaggregator.rest.auth.PrincipalUser;
 import fr.rssfeedaggregator.rest.auth.Secured;
-import io.swagger.annotations.Api;
 
-@Api
 @Path("feeds")
 public class FeedEntries {
 

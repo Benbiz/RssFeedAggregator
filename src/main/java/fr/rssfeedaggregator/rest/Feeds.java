@@ -9,7 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -35,15 +35,12 @@ import fr.rssfeedaggregator.entity.UserFeed;
 import fr.rssfeedaggregator.entity.UserFeedEntry;
 import fr.rssfeedaggregator.rest.auth.PrincipalUser;
 import fr.rssfeedaggregator.rest.auth.Secured;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.Authorization;
 
 @Path("feeds")
 public class Feeds {
 
 	@Secured
-	@PUT
-	@Path("subscribe")
+	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes("application/x-www-form-urlencoded")
 	public Response addFeed(@FormParam("url") String url, @Context SecurityContext securityContext,
@@ -65,7 +62,6 @@ public class Feeds {
 				feed = new Feed(feedUrl.toString(), syndfeed.getTitle(), syndfeed.getLink(), syndfeed.getDescription());
 				datastore.save(feed);
 			}
-			// TODO: Add User in securityContext
 			userfeed = new UserFeed(user, feed);
 			datastore.save(userfeed);
 			for (SyndEntry entry : syndfeed.getEntries()) {
@@ -156,6 +152,6 @@ public class Feeds {
 			datastore.delete(feedentries);
 			datastore.delete(feed);
 		}
-		return Response.ok().build();
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 }
