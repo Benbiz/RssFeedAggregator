@@ -143,7 +143,7 @@ public class FeedEntries {
 		final UpdateResults results = datastore.update(userfeedentries, updateOperations);
 		if (results.getUpdatedCount() == 0)
 			return Response.status(Response.Status.BAD_REQUEST).build();
-		return Response.ok().build();
+		return Response.ok().entity("DONE").build();
 	}
 	
 	private void SyncFeed(Datastore datastore, Feed feed)
