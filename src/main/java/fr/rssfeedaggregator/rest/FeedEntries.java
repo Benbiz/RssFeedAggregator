@@ -1,5 +1,8 @@
 package fr.rssfeedaggregator.rest;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -22,9 +25,16 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
+
 import fr.rssfeedaggregator.entity.UserFeedEntry;
 import fr.rssfeedaggregator.entity.Feed;
 import fr.rssfeedaggregator.entity.FeedEntry;
+import fr.rssfeedaggregator.entity.FeedEntryDescription;
 import fr.rssfeedaggregator.entity.User;
 import fr.rssfeedaggregator.entity.UserFeed;
 import fr.rssfeedaggregator.rest.auth.PrincipalUser;
@@ -69,6 +79,30 @@ public class FeedEntries {
 		if (userfeed == null)
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		
+		SyncFeed(datastore, feed);
+		
+		Query<FeedEntry> newentries = datastore.createQuery(FeedEntry.class)
+				.field("feed").equal(feed)
+				.field("_id").greaterThan(new ObjectId(userfeed.getTimestamp()));
+		System.out.println("New entries count = " + newentries.count());
+		for (FeedEntry entry : newentries.fetch())
+		{
+			try
+			{
+				UserFeedEntry userfeedentry = new UserFeedEntry(user, entry);
+				datastore.save(userfeedentry);
+				final UpdateOperations<UserFeed> updateOperations = datastore.createUpdateOperations(UserFeed.class)
+		                .set("timestamp", entry.getId().getDate());
+				datastore.update(userfeed, updateOperations);
+			}
+			catch (Exception e)
+			{
+				System.out.println(e.getMessage());
+				continue;
+			}
+		}
+		
+		
 		Query<FeedEntry> entries = datastore.createQuery(FeedEntry.class)
 				.field("feed").equal(feed);
 		Query<UserFeedEntry> userfeedentries = datastore.createQuery(UserFeedEntry.class)
@@ -111,5 +145,31 @@ public class FeedEntries {
 		if (results.getUpdatedCount() == 0)
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		return Response.ok().build();
+	}
+	
+	private void SyncFeed(Datastore datastore, Feed feed)
+	{
+		URL feedUrl;
+		SyndFeedInput input = new SyndFeedInput();
+		SyndFeed syndfeed;
+		FeedEntry feedentry;
+		try {
+			feedUrl = new URL(feed.getFeedUrl());
+			syndfeed = input.build(new XmlReader(feedUrl));
+		} catch (IllegalArgumentException | FeedException | IOException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (SyndEntry entry : syndfeed.getEntries()) {
+			feedentry = datastore.createQuery(FeedEntry.class).field("title").equal(entry.getTitle()).field("link")
+					.equal(entry.getLink()).field("feed").equal(feed).get();
+			if (feedentry == null) {
+				FeedEntryDescription desc = new FeedEntryDescription(entry.getDescription().getMode(),
+						entry.getDescription().getType(), entry.getDescription().getValue());
+				feedentry = new FeedEntry(feed, entry.getTitle(), entry.getLink(), desc);
+				datastore.save(feedentry);
+			}
+		}
 	}
 }

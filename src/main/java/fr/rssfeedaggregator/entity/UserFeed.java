@@ -1,5 +1,7 @@
 package fr.rssfeedaggregator.entity;
 
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
@@ -12,6 +14,7 @@ public class UserFeed {
 	private User user;
 	@Reference
 	private Feed feed;
+	private Date timestamp;
 
 	public UserFeed() {
 	}
@@ -19,6 +22,7 @@ public class UserFeed {
 	public UserFeed(User user, Feed feed) {
 		this.user = user;
 		this.feed = feed;
+		this.timestamp = new Date();
 	}
 
 	public User getUser() {
@@ -35,5 +39,13 @@ public class UserFeed {
 
 	public void setFeed(Feed feed) {
 		this.feed = feed;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 }

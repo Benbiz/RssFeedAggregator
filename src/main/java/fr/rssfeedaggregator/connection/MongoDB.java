@@ -41,6 +41,6 @@ public class MongoDB implements ServletContextListener {
 		}
 		
 		scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new SyncFeedEntries(), 0, 15, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(new SyncFeedEntries(), 0, 15, TimeUnit.SECONDS);
 	}
 }

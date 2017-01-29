@@ -62,8 +62,6 @@ public class Feeds {
 				feed = new Feed(feedUrl.toString(), syndfeed.getTitle(), syndfeed.getLink(), syndfeed.getDescription());
 				datastore.save(feed);
 			}
-			userfeed = new UserFeed(user, feed);
-			datastore.save(userfeed);
 			for (SyndEntry entry : syndfeed.getEntries()) {
 				feedentry = datastore.createQuery(FeedEntry.class).field("title").equal(entry.getTitle()).field("link")
 						.equal(entry.getLink()).field("feed").equal(datastore.getKey(feed)).get();
@@ -76,6 +74,8 @@ public class Feeds {
 				userfeedentry = new UserFeedEntry(user, feedentry);
 				datastore.save(userfeedentry);
 			}
+			userfeed = new UserFeed(user, feed);
+			datastore.save(userfeed);
 			return Response.ok(feed).build();
 		} catch (Exception ex) {
 			// ex.printStackTrace();
