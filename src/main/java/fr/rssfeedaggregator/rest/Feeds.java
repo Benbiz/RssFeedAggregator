@@ -152,6 +152,6 @@ public class Feeds {
 			datastore.delete(feedentries);
 			datastore.delete(feed);
 		}
-		return Response.status(Response.Status.NO_CONTENT).build();
+		return Response.status(Response.Status.NO_CONTENT).entity("Feed deleted").build();
 	}
 }

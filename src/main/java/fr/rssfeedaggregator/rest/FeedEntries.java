@@ -91,9 +91,6 @@ public class FeedEntries {
 			{
 				UserFeedEntry userfeedentry = new UserFeedEntry(user, entry);
 				datastore.save(userfeedentry);
-				final UpdateOperations<UserFeed> updateOperations = datastore.createUpdateOperations(UserFeed.class)
-		                .set("timestamp", entry.getId().getDate());
-				datastore.update(userfeed, updateOperations);
 			}
 			catch (Exception e)
 			{
@@ -101,7 +98,9 @@ public class FeedEntries {
 				continue;
 			}
 		}
-		
+		final UpdateOperations<UserFeed> updateOperations = datastore.createUpdateOperations(UserFeed.class)
+                .set("timestamp", new Date());
+		datastore.update(userfeed, updateOperations);
 		
 		Query<FeedEntry> entries = datastore.createQuery(FeedEntry.class)
 				.field("feed").equal(feed);
